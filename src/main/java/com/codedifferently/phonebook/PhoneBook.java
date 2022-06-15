@@ -24,10 +24,9 @@ public class PhoneBook {
 
     public Person findPersonByName(String firstName, String lastName)
             throws PersonNotFoundException {
-        Person target = null;
         for(Person person : people){
             if(person.getFirstName().equals(firstName) && person.getLastName().equals(lastName))
-                target = person;
+                return person;
         }
         String error = String.format("Person with the following values not found: First Name: %s, Last Name: %s",
                 firstName, lastName);
