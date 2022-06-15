@@ -10,12 +10,12 @@ public class SinglyLinkedList<T> implements Iterable<T> {
 
     public SinglyLinkedList(Node<T> head){
         this.head = head;
-        numberOfElements = 0;
+        numberOfElements = 1;
     }
 
     public T get(int index) {
         int i = 0;
-        if(index < 0 || index > numberOfElements)
+        if(index < 0 || index > size())
             throw new IndexOutOfBoundsException(index);
         if(!head.hasNext()) return head.getData();
         Node<T> current = head;
@@ -36,6 +36,38 @@ public class SinglyLinkedList<T> implements Iterable<T> {
         while(currentNode.hasNext()) currentNode = currentNode.getNext();
         currentNode.setNext(newNode);
         numberOfElements++;
+    }
+
+    public Boolean remove(T e){
+        if(size() == 0)  return false;
+        if(head.getData().equals(e)){
+            Node<T> expired = head;
+            head = head.getNext();
+            expired.setData(null);
+            expired.setNext(null);
+            expired = null;
+            numberOfElements--;
+            return true;
+        }
+        Node<T> previous = head;
+        Node<T> currentNode = head;
+        while(currentNode != null){
+            if(currentNode.getData().equals(e)) {
+                previous.setNext(currentNode.getNext());
+                currentNode.setData(null);
+                currentNode.setNext(null);
+                currentNode = null;
+                numberOfElements--;
+                return true;
+            }
+            previous = currentNode;
+            currentNode = currentNode.getNext();
+        }
+        throw new NoSuchElementException();
+    }
+
+    public Integer size(){
+        return numberOfElements;
     }
 
     @Override
